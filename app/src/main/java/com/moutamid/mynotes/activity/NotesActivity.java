@@ -40,7 +40,6 @@ public class NotesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         saveNotesBtn = findViewById(R.id.saveBtnNotes);
         savedNotesBtn = findViewById(R.id.savedNotesBtn);

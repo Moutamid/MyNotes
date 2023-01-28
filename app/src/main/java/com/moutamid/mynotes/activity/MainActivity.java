@@ -3,10 +3,13 @@ package com.moutamid.mynotes.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import com.fxn.stash.Stash;
+import com.kwabenaberko.openweathermaplib.model.common.Main;
 import com.moutamid.mynotes.Constants;
 import com.moutamid.mynotes.databinding.ActivityMainBinding;
 import com.moutamid.mynotes.models.WeatherDataModel;
@@ -38,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(b.getRoot());
 
         initChart();
+
+        b.notesBtn.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, NotesActivity.class));
+        });
 
     }
 
