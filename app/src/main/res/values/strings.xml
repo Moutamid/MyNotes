@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">My Notes</string>
+    <string name="OPEN_WEATHER_MAP_API_KEY">6cab45541ef9f30d265545eb9ca0b563</string>
+</resources>
