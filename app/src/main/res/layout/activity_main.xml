@@ -1,28 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-    <org.eazegraph.lib.charts.ValueLineChart
-        android:id="@+id/cubiclinechart"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:egCurveSmoothness="0.4"
-        app:egIndicatorLineColor="#FE6DA8"
-        app:egLegendHeight="40dp"
-        app:egLineStroke="@dimen/_2sdp"
-        app:egShowStandardValue="true"
-        app:egUseCubic="true"
-        app:egUseOverlapFill="false" />
-
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/notesBtn"
-        android:layout_alignParentBottom="true"
-        android:text="open notes" />
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center"
+            android:text="Current temperature"
+            android:textSize="@dimen/_10ssp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:id="@+id/currentTempTxt"
+            android:textColor="#CC000000"
+            android:textSize="@dimen/_25ssp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/_55sdp"
+            android:layout_height="@dimen/_55sdp"
+            android:layout_gravity="center"
+            android:id="@+id/weatherIcon"
+            android:layout_marginTop="@dimen/_10sdp" />
+
+        <org.eazegraph.lib.charts.ValueLineChart
+            android:id="@+id/cubiclinechart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:egCurveSmoothness="0.4"
+            app:egIndicatorLineColor="#CC000000"
+            app:egLegendHeight="40dp"
+            app:egLineStroke="@dimen/_9sdp"
+            app:egShowStandardValue="true"
+            app:egUseCubic="true"
+            app:egUseOverlapFill="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Notes"
+                android:textColor="#CC000000"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:id="@+id/notesBtn"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_add_circle_outline_24" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainRv"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            tools:itemCount="2"
+            tools:listitem="@layout/layout_item_notes" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
