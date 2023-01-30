@@ -31,13 +31,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:autoSizeTextType="uniform"
-                android:breakStrategy="balanced"
                 android:gravity="center"
-                android:maxLines="1"
                 android:text="Notes Page"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_25ssp"
+                android:textSize="@dimen/_22ssp"
                 android:textStyle="bold" />
 
             <ImageView

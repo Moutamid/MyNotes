@@ -11,17 +11,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.fxn.stash.Stash;
-import com.kwabenaberko.openweathermaplib.model.common.Main;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.Wave;
 import com.moutamid.mynotes.Constants;
 import com.moutamid.mynotes.R;
 import com.moutamid.mynotes.databinding.ActivityMainBinding;
@@ -55,17 +56,18 @@ public class MainActivity extends AppCompatActivity {
         b = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
-        if (tasksArrayList.size() == 0) {
-            tasksArrayList.add(getDateTime() + "\n" + " Hi, my name is Moutamid. so my first note is that my saturday was going pretty well until i realized it was sunday :(");
-        }
+        Sprite doubleBounce = new Wave();
+        b.spinKit.setIndeterminateDrawable(doubleBounce);
 
-        initChart();
+        if (tasksArrayList.size() == 0) {
+            tasksArrayList.add(getDateTime() + "\n" + "(test note) My saturday was going pretty well until i realized it was sunday :(");
+        }
 
         b.notesBtn.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, NotesActivity.class));
         });
 
-        initRecyclerView();
+        initRecyclerView(true);
 
     }
 
@@ -129,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 ValueLineSeries series = new ValueLineSeries();
-//                series.setColor(0xFF56B7F1);
                 series.setColor(0xFFF6C15A);
 
                 ArrayList<WeatherDataModel> list = Stash.getArrayList(Constants.WEATHER_LIST, WeatherDataModel.class);
@@ -161,12 +162,21 @@ public class MainActivity extends AppCompatActivity {
                     series.addPoint(new ValueLinePoint(list.get(i).day, list.get(i).degree));
                 }
 
+                Stash.put(Constants.WEATHER_LIST, list);
+
                 runOnUiThread(() -> {
-                    b.cubiclinechart.addSeries(series);
-                    b.cubiclinechart.startAnimation();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            b.spinKit.setVisibility(View.GONE);
+                            b.frontLayout.setVisibility(View.VISIBLE);
+
+                            b.cubiclinechart.addSeries(series);
+                            b.cubiclinechart.startAnimation();
+                        }
+                    }, 3000);
                 });
 
-                Stash.put(Constants.WEATHER_LIST, list);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -183,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView conversationRecyclerView;
     private RecyclerViewAdapterMessages adapter;
 
-    private void initRecyclerView() {
+    private void initRecyclerView(boolean isFirstTime) {
 
         conversationRecyclerView = findViewById(R.id.mainRv);
         //conversationRecyclerView.addItemDecoration(new DividerItemDecoration(conversationRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
@@ -200,13 +210,8 @@ public class MainActivity extends AppCompatActivity {
 
         conversationRecyclerView.setAdapter(adapter);
 
-        //    if (adapter.getItemCount() != 0) {
-
-        //        noChatsLayout.setVisibility(View.GONE);
-        //        chatsRecyclerView.setVisibility(View.VISIBLE);
-
-        //    }
-
+        if (isFirstTime)
+            initChart();
     }
 
     private class RecyclerViewAdapterMessages extends RecyclerView.Adapter
@@ -292,6 +297,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initRecyclerView();
+        tasksArrayList = Stash.getArrayList(Constants.NOTES_LIST, String.class);
+
+        if (tasksArrayList.size() == 0) {
+            tasksArrayList.add(getDateTime() + "\n" + "(test note) My saturday was going pretty well until i realized it was sunday :(");
+        }
+        initRecyclerView(false);
     }
 }
