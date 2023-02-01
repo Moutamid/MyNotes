@@ -23,7 +23,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="@dimen/_20sdp"
-                android:src="@drawable/ic_baseline_check_circle_24" />
+                android:src="@drawable/ic_baseline_check_circle_24"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -42,7 +43,10 @@
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:visibility="invisible" />
             <!--                android:src="@drawable/settings" />-->
 
@@ -53,7 +57,7 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/savedNotesBtn"
             android:layout_below="@id/top_header_add_post"
-            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_20sdp">
 
             <LinearLayout
@@ -75,18 +79,34 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.moutamid.mynotes.utils.AppCompatLineEditText
-            android:id="@+id/notesEdittext"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/savedNotesBtn"
             android:layout_below="@id/top_header_add_post"
-            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginHorizontal="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:background="#F6C15A"
-            android:gravity="top"
-            android:hint="Your note's text resides here..."
-            android:padding="@dimen/_15sdp" />
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/micButton"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/baseline_mic_24" />
+
+            <com.moutamid.mynotes.utils.AppCompatLineEditText
+                android:id="@+id/notesEdittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F6C15A"
+                android:gravity="top"
+                android:hint="Your note's text resides here..."
+                android:padding="@dimen/_15sdp" />
+
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/savedNotesBtn"

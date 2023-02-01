@@ -1,10 +1,16 @@
 package com.moutamid.mynotes.activity;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -27,8 +34,11 @@ import com.moutamid.mynotes.utils.AppCompatLineEditText;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
 
 public class NotesActivity extends AppCompatActivity {
+    private static final String TAG = "NotesActivity";
 
     private ImageView saveNotesBtn;
     private AppCompatLineEditText editText;
@@ -67,7 +77,73 @@ public class NotesActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.micButton).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        float reducedvalue = (float) 0.9;
+                        v.setScaleX(reducedvalue);
+                        v.setScaleY(reducedvalue);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        v.setScaleX(1);
+                        v.setScaleY(1);
+                        triggerVoiceApi();
+                        break;
+                }
+                return true;
+            }
+        });
+
         initSavedNotesData();
+
+        /*savedNotesBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        float reducedvalue = (float) 0.9;
+                        v.setScaleX(reducedvalue);
+                        v.setScaleY(reducedvalue);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        v.setScaleX(1);
+                        v.setScaleY(1);
+                        break;
+                }
+                return true;
+            }
+        });*/
+    }
+
+    private void triggerVoiceApi() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to type :)");
+
+        try {
+            startActivityForResult(intent, 9999);
+        } catch (Exception e) {
+            runOnUiThread(() -> {
+                Toast.makeText(NotesActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 9999) {
+            if (resultCode == RESULT_OK && data != null) {
+                ArrayList<String> result = data.getStringArrayListExtra(
+                        RecognizerIntent.EXTRA_RESULTS);
+                editText.setText(editText.getText().toString()+Objects.requireNonNull(result).get(0));
+            }
+        }
     }
 
     private void initSavedNotesData() {
@@ -83,10 +159,12 @@ public class NotesActivity extends AppCompatActivity {
                         editText.setVisibility(View.GONE);
                         savedNotesBtn.setText("Hide Saved Notes");
                         conversationRecyclerView.setVisibility(View.VISIBLE);
+                        findViewById(R.id.micButton).setVisibility(View.GONE);
                     } else {
                         editText.setVisibility(View.VISIBLE);
                         savedNotesBtn.setText("Show Saved Notes");
                         conversationRecyclerView.setVisibility(View.GONE);
+                        findViewById(R.id.micButton).setVisibility(View.VISIBLE);
                     }
                 }
             });
@@ -200,6 +278,43 @@ public class NotesActivity extends AppCompatActivity {
                             .show();
 
                     return false;
+                }
+            });
+            holder.itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    int duration = 300;
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(v,
+                                    "scaleX", 0.8f);
+                            ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(v,
+                                    "scaleY", 0.8f);
+                            scaleDownX.setDuration(duration);
+                            scaleDownY.setDuration(duration);
+
+                            AnimatorSet scaleDown = new AnimatorSet();
+                            scaleDown.play(scaleDownX).with(scaleDownY);
+
+                            scaleDown.start();
+                            break;
+
+                        case MotionEvent.ACTION_UP:
+                            ObjectAnimator scaleDownX2 = ObjectAnimator.ofFloat(
+                                    v, "scaleX", 1f);
+                            ObjectAnimator scaleDownY2 = ObjectAnimator.ofFloat(
+                                    v, "scaleY", 1f);
+                            scaleDownX2.setDuration(duration);
+                            scaleDownY2.setDuration(duration);
+
+                            AnimatorSet scaleDown2 = new AnimatorSet();
+                            scaleDown2.play(scaleDownX2).with(scaleDownY2);
+
+                            scaleDown2.start();
+
+                            break;
+                    }
+                    return true;
                 }
             });
 

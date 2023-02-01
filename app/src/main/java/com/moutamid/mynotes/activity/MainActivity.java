@@ -7,12 +7,15 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -63,9 +66,122 @@ public class MainActivity extends AppCompatActivity {
             tasksArrayList.add(getDateTime() + "\n" + "(test note) My saturday was going pretty well until i realized it was sunday :(");
         }
 
-        b.notesBtn.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, NotesActivity.class));
+        b.notesBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int duration = 300;
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(v,
+                                "scaleX", 0.8f);
+                        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(v,
+                                "scaleY", 0.8f);
+                        scaleDownX.setDuration(duration);
+                        scaleDownY.setDuration(duration);
+
+                        AnimatorSet scaleDown = new AnimatorSet();
+                        scaleDown.play(scaleDownX).with(scaleDownY);
+
+                        scaleDown.start();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        ObjectAnimator scaleDownX2 = ObjectAnimator.ofFloat(
+                                v, "scaleX", 1f);
+                        ObjectAnimator scaleDownY2 = ObjectAnimator.ofFloat(
+                                v, "scaleY", 1f);
+                        scaleDownX2.setDuration(duration);
+                        scaleDownY2.setDuration(duration);
+
+                        AnimatorSet scaleDown2 = new AnimatorSet();
+                        scaleDown2.play(scaleDownX2).with(scaleDownY2);
+
+                        scaleDown2.start();
+                        startActivity(new Intent(MainActivity.this, NotesActivity.class));
+
+                        break;
+                }
+                return true;
+            }
         });
+
+        b.checkWeatherBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int duration = 300;
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(v,
+                                "scaleX", 0.8f);
+                        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(v,
+                                "scaleY", 0.8f);
+                        scaleDownX.setDuration(duration);
+                        scaleDownY.setDuration(duration);
+
+                        AnimatorSet scaleDown = new AnimatorSet();
+                        scaleDown.play(scaleDownX).with(scaleDownY);
+
+                        scaleDown.start();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        ObjectAnimator scaleDownX2 = ObjectAnimator.ofFloat(
+                                v, "scaleX", 1f);
+                        ObjectAnimator scaleDownY2 = ObjectAnimator.ofFloat(
+                                v, "scaleY", 1f);
+                        scaleDownX2.setDuration(duration);
+                        scaleDownY2.setDuration(duration);
+
+                        AnimatorSet scaleDown2 = new AnimatorSet();
+                        scaleDown2.play(scaleDownX2).with(scaleDownY2);
+
+                        scaleDown2.start();
+
+                        startActivity(new Intent(MainActivity.this, CheckWeatherActivity.class));
+                        break;
+                }
+                return true;
+            }
+        });
+
+        b.weatherIcon.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int duration = 300;
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(v,
+                                "scaleX", 0.8f);
+                        ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(v,
+                                "scaleY", 0.8f);
+                        scaleDownX.setDuration(duration);
+                        scaleDownY.setDuration(duration);
+
+                        AnimatorSet scaleDown = new AnimatorSet();
+                        scaleDown.play(scaleDownX).with(scaleDownY);
+
+                        scaleDown.start();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        ObjectAnimator scaleDownX2 = ObjectAnimator.ofFloat(
+                                v, "scaleX", 1f);
+                        ObjectAnimator scaleDownY2 = ObjectAnimator.ofFloat(
+                                v, "scaleY", 1f);
+                        scaleDownX2.setDuration(duration);
+                        scaleDownY2.setDuration(duration);
+
+                        AnimatorSet scaleDown2 = new AnimatorSet();
+                        scaleDown2.play(scaleDownX2).with(scaleDownY2);
+
+                        scaleDown2.start();
+
+                        break;
+                }
+                return true;
+            }
+        });
+
 
         initRecyclerView(true);
 
@@ -259,6 +375,45 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             });
+
+            holder.itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    int duration = 300;
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            ObjectAnimator scaleDownX = ObjectAnimator.ofFloat(v,
+                                    "scaleX", 0.8f);
+                            ObjectAnimator scaleDownY = ObjectAnimator.ofFloat(v,
+                                    "scaleY", 0.8f);
+                            scaleDownX.setDuration(duration);
+                            scaleDownY.setDuration(duration);
+
+                            AnimatorSet scaleDown = new AnimatorSet();
+                            scaleDown.play(scaleDownX).with(scaleDownY);
+
+                            scaleDown.start();
+                            break;
+
+                        case MotionEvent.ACTION_UP:
+                            ObjectAnimator scaleDownX2 = ObjectAnimator.ofFloat(
+                                    v, "scaleX", 1f);
+                            ObjectAnimator scaleDownY2 = ObjectAnimator.ofFloat(
+                                    v, "scaleY", 1f);
+                            scaleDownX2.setDuration(duration);
+                            scaleDownY2.setDuration(duration);
+
+                            AnimatorSet scaleDown2 = new AnimatorSet();
+                            scaleDown2.play(scaleDownX2).with(scaleDownY2);
+
+                            scaleDown2.start();
+
+                            break;
+                    }
+                    return true;
+                }
+            });
+
 
         }
 

@@ -27,43 +27,53 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:gravity="center"
-                android:text="Current temperature"
-                android:textSize="@dimen/_10ssp" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/currentTempTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center"
-                android:textColor="#CC000000"
-                android:fontFamily="monospace"
-                android:textSize="@dimen/_25ssp"
-                android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/checkWeatherBtn"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/_20sdp"
+                    android:background="@drawable/bg_notes_tv"
+                    android:src="@drawable/baseline_keyboard_arrow_right_24" />
+
+                <TextView
+                    android:id="@+id/currentTempTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:text="19.78"
+                    android:textColor="#CC000000"
+                    android:textSize="@dimen/_25ssp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/weatherIcon"
                 android:layout_width="@dimen/_55sdp"
                 android:layout_height="@dimen/_55sdp"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_5sdp" />
+                android:layout_marginTop="@dimen/_5sdp"
+                android:src="@drawable/clouds" />
 
             <org.eazegraph.lib.charts.ValueLineChart
                 android:id="@+id/cubiclinechart"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                app:egActivateIndicatorShadow="true"
                 app:egCurveSmoothness="0.4"
                 app:egIndicatorLineColor="#CC000000"
+                app:egIndicatorTextColor="#CC000000"
                 app:egLegendHeight="@dimen/_40sdp"
                 app:egLineStroke="@dimen/_9sdp"
-                app:egActivateIndicatorShadow="true"
-                app:egIndicatorTextColor="#CC000000"
                 app:egShowStandardValue="true"
                 app:egUseCubic="true"
                 app:egUseOverlapFill="true" />
@@ -89,7 +99,7 @@
                     android:layout_height="@dimen/_20sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_baseline_add_circle_outline_24" />
+                    android:src="@drawable/baseline_keyboard_arrow_right_24" />
 
             </RelativeLayout>
 
@@ -102,6 +112,7 @@
                 tools:listitem="@layout/layout_item_notes" />
 
         </LinearLayout>
+
     </RelativeLayout>
 
 </androidx.core.widget.NestedScrollView>
