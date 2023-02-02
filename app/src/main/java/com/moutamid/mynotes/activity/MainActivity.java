@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         b = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
+        Constants.checkApp(this);
 
         Sprite doubleBounce = new Wave();
         b.spinKit.setIndeterminateDrawable(doubleBounce);
